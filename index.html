@@ -6,116 +6,148 @@
 <title>For Chikuu 💖</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  height:100vh;
+  background:linear-gradient(135deg,#ffd6e8,#fff1f7);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Segoe UI',cursive;
+  overflow:hidden;
 }
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: #ffd6e8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Segoe UI', cursive;
-  overflow: hidden;
+/* 💗 floating hearts */
+.heart{
+  position:absolute;
+  bottom:-20px;
+  font-size:18px;
+  opacity:.6;
+  animation:float 12s linear infinite;
+}
+@keyframes float{
+  to{transform:translateY(-130vh) scale(1.5);opacity:0;}
 }
 
-/* Floating hearts */
-.heart {
-  position: absolute;
-  bottom: -20px;
-  color: #ff4d88;
-  font-size: 20px;
-  animation: floatUp 6s linear infinite;
-  opacity: 0.7;
+/* container */
+.container{
+  text-align:center;
 }
 
-@keyframes floatUp {
-  from {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-110vh) scale(1.5);
-    opacity: 0;
-  }
+/* ✉️ envelope */
+.envelope{
+  width:260px;
+  height:170px;
+  background:#fff;
+  border-radius:10px;
+  position:relative;
+  cursor:pointer;
+  box-shadow:0 20px 40px rgba(0,0,0,.18);
+  overflow:hidden;
+  transition:transform .8s ease, opacity .8s ease;
 }
 
-.container {
-  text-align: center;
-  padding: 10px;
+.envelope.fade-out{
+  transform:scale(.92);
+  opacity:0;
 }
 
-/* Envelope */
-.envelope {
-  width: 220px;
-  height: 150px;
-  background: #fff;
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.4s;
+/* flap – slow & smooth */
+.flap{
+  position:absolute;
+  inset:0;
+  background:#ffb6c1;
+  clip-path:polygon(0 0,100% 0,50% 60%);
+  transform-origin:top;
+  transition:transform 2.2s cubic-bezier(.22,1,.36,1);
+  z-index:2;
 }
 
-.envelope:hover {
-  transform: scale(1.05);
+.envelope.open .flap{
+  transform:rotateX(180deg);
 }
 
-.envelope::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-left: 110px solid transparent;
-  border-right: 110px solid transparent;
-  border-top: 75px solid #ffb6c1;
+/* 💖 wax seal */
+.seal{
+  position:absolute;
+  top:55%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:42px;
+  height:42px;
+  background:#ff4d88;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:18px;
+  box-shadow:0 8px 18px rgba(0,0,0,.25);
+  z-index:4;
+  transition:opacity 1s ease, transform 1s ease;
 }
 
-.name {
-  position: absolute;
-  bottom: 12px;
-  width: 100%;
-  text-align: center;
-  font-weight: bold;
-  color: #ff4d88;
+/* hide seal on open */
+.envelope.open .seal{
+  opacity:0;
+  transform:translate(-50%,-50%) scale(.7);
 }
 
-/* Letter */
-.letter {
-  display: none;
-  max-width: 320px;
-  background: #fffafc;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  animation: slideUp 1s ease forwards;
-  font-size: 15px;
+/* name */
+.name{
+  position:absolute;
+  bottom:16px;
+  width:100%;
+  text-align:center;
+  font-weight:bold;
+  color:#ff4d88;
+  font-size:20px;
+  z-index:3;
 }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(80px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+/* 🧸 teddy */
+.teddy{
+  margin-top:14px;
+  font-size:42px;
+  transition:opacity .8s ease, transform .8s ease;
+}
+.teddy.hide{
+  opacity:0;
+  transform:translateY(24px);
 }
 
-button {
-  margin-top: 15px;
-  padding: 10px 22px;
-  border: none;
-  background: #ff4d88;
-  color: white;
-  border-radius: 25px;
-  font-size: 15px;
-  cursor: pointer;
+/* 💌 letter */
+.letter{
+  max-width:360px;
+  padding:26px;
+  margin-top:20px;
+  border-radius:18px;
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(12px);
+  box-shadow:0 25px 50px rgba(0,0,0,.25);
+
+  opacity:0;
+  transform:translateY(40px) scale(.96);
+  transition:all 1s cubic-bezier(.22,1,.36,1);
+  display:none;
 }
 
-button:hover {
-  background: #ff2e74;
+.letter.show{
+  display:block;
+  opacity:1;
+  transform:translateY(0) scale(1);
+}
+
+button{
+  margin-top:18px;
+  padding:10px 30px;
+  border:none;
+  background:#ff4d88;
+  color:#fff;
+  border-radius:30px;
+  font-size:15px;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -123,48 +155,77 @@ button:hover {
 <body>
 
 <div class="container">
-  <div class="envelope" onclick="openLetter()">
+
+  <!-- ✉️ Envelope -->
+  <div class="envelope" id="env" onclick="openLetter()">
+    <div class="flap"></div>
+    <div class="seal">💗</div>
     <div class="name">Chikuu 💕</div>
   </div>
 
+  <!-- 🧸 Teddy -->
+  <div class="teddy" id="teddy">🧸</div>
+
+  <!-- 💌 Letter -->
   <div class="letter" id="letter">
-    <p>
-      I know I messed up… thoda zyada hi 🫠<br>
-      Brain ne chhutti le li thi,<br>
-      aur muh ne overtime kar liya.<br><br>
-
-      Life mein rewind button nahi hota,<br>
-      bas learn aur improve kar sakte hain.<br>
-      Toh main wahi karunga —<br>
-      aur haan, success rate 95% rakhunga 😌<br>
-      <i>(remaining 5% pe thoda sa patience please 🙈)</i>
-    </p>
-
+    <p id="text"></p>
     <button>I’m yours, always 💖</button>
   </div>
+
 </div>
 
 <script>
-function openLetter() {
-  document.querySelector('.envelope').style.display = 'none';
-  document.getElementById('letter').style.display = 'block';
+const msg = `I know I messed up… thoda zyada hi 🫠
+Brain ne chhutti le li thi,
+aur muh ne overtime kar liya.
+
+Life mein rewind button nahi hota,
+bas learn aur improve kar sakte hain.
+Toh main wahi karunga —
+aur haan, success rate 95% rakhunga 😌
+(remaining 5% pe thoda sa patience please 🙈)`;
+
+let i=0;
+
+function openLetter(){
+  const env=document.getElementById("env");
+  const teddy=document.getElementById("teddy");
+  const letter=document.getElementById("letter");
+
+  env.classList.add("open");
+
+  setTimeout(()=>{ teddy.classList.add("hide"); },900);
+  setTimeout(()=>{ env.classList.add("fade-out"); },2000);
+
+  setTimeout(()=>{
+    env.style.display="none";
+    letter.style.display="block";
+    requestAnimationFrame(()=>{
+      letter.classList.add("show");
+      typeSlow();
+    });
+  },2600);
 }
 
-/* Create floating hearts */
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.classList.add("heart");
-  heart.innerHTML = "💗";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-  document.body.appendChild(heart);
-
-  setTimeout(() => {
-    heart.remove();
-  }, 7000);
+/* slow typing */
+function typeSlow(){
+  if(i<msg.length){
+    document.getElementById("text").innerHTML +=
+      msg[i]==="\n" ? "<br>" : msg[i];
+    i++;
+    setTimeout(typeSlow,55);
+  }
 }
 
-setInterval(createHeart, 500);
+/* floating hearts */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💗";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),16000);
+},1200);
 </script>
 
 </body>
