@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Chikuu 💖</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background: #ffd6e8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', cursive;
+  overflow: hidden;
+}
+
+/* Floating hearts */
+.heart {
+  position: absolute;
+  bottom: -20px;
+  color: #ff4d88;
+  font-size: 20px;
+  animation: floatUp 6s linear infinite;
+  opacity: 0.7;
+}
+
+@keyframes floatUp {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-110vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+.container {
+  text-align: center;
+  padding: 10px;
+}
+
+/* Envelope */
+.envelope {
+  width: 220px;
+  height: 150px;
+  background: #fff;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.4s;
+}
+
+.envelope:hover {
+  transform: scale(1.05);
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-left: 110px solid transparent;
+  border-right: 110px solid transparent;
+  border-top: 75px solid #ffb6c1;
+}
+
+.name {
+  position: absolute;
+  bottom: 12px;
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  color: #ff4d88;
+}
+
+/* Letter */
+.letter {
+  display: none;
+  max-width: 320px;
+  background: #fffafc;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: slideUp 1s ease forwards;
+  font-size: 15px;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(80px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 22px;
+  border: none;
+  background: #ff4d88;
+  color: white;
+  border-radius: 25px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff2e74;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="envelope" onclick="openLetter()">
+    <div class="name">Chikuu 💕</div>
+  </div>
+
+  <div class="letter" id="letter">
+    <p>
+      I know I messed up… thoda zyada hi 🫠<br>
+      Brain ne chhutti le li thi,<br>
+      aur muh ne overtime kar liya.<br><br>
+
+      Life mein rewind button nahi hota,<br>
+      bas learn aur improve kar sakte hain.<br>
+      Toh main wahi karunga —<br>
+      aur haan, success rate 95% rakhunga 😌<br>
+      <i>(remaining 5% pe thoda sa patience please 🙈)</i>
+    </p>
+
+    <button>I’m yours, always 💖</button>
+  </div>
+</div>
+
+<script>
+function openLetter() {
+  document.querySelector('.envelope').style.display = 'none';
+  document.getElementById('letter').style.display = 'block';
+}
+
+/* Create floating hearts */
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
+  document.body.appendChild(heart);
+
+  setTimeout(() => {
+    heart.remove();
+  }, 7000);
+}
+
+setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
